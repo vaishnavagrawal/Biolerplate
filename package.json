@@ -5,8 +5,10 @@
     "start": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "preitter :fix": "preitter --write",
-    "preitter :check": "preitter --check"
+    "prettier": "prettier -w -u src/**/*.{ts,tsx}",
+    "lint": "eslint ./src --ext .js,.ts,.tsx",
+    "lint:fix": "eslint ./src --ext .js,.ts,.tsx --quiet --fix",
+    "lint:quiet": "eslint ./src --ext .js,.ts,.tsx --quiet"
   },
   "husky": {
     "hooks": {
@@ -14,9 +16,10 @@
     }
   },
   "lint-staged": {
-    "src/*.{ts ., tsx }": [
-      "yarn preitter:fix",
-      "yarn lint"
+    "src/**/*.{js,ts,jsx,tsx}": "npm run lint:quiet",
+    "**/*.{ts,tsx}": "bash -c tsc --noEmit",
+    "*": [
+      "prettier -w  -u"
     ]
   },
   "dependencies": {
